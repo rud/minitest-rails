@@ -21,6 +21,7 @@ jobs:
           - '3.2'
           - '3.3'
           - '3.4'
+          - '4.0'
         gemfile:
           - gemfiles/rails-8.1.0.gemfile
     env:
