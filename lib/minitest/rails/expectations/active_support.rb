@@ -16,7 +16,6 @@ module Minitest
         #
         # :method: must_change
         # :args: expression, from: UNTRACKED, to: UNTRACKED
-        infect_an_assertion :assert_changes, :must_change, :block
 
         ##
         # Assertion that the result of evaluating an expression is not changed before
@@ -31,7 +30,6 @@ module Minitest
         #
         # :method: wont_change
         # :args: expression
-        infect_an_assertion :refute_changes, :wont_change, :block
 
         ##
         # Test numeric difference between the return value of an expression as a
@@ -47,7 +45,6 @@ module Minitest
         #
         # :method: must_differ
         # :args: expression, *args
-        infect_an_assertion :assert_difference, :must_differ, :block
 
         ##
         # Assertion that the numeric result of evaluating an expression is not changed
@@ -60,10 +57,17 @@ module Minitest
         #
         # :method: wont_differ
         # :args: expression
-        infect_an_assertion :refute_difference, :wont_differ, :block
       end
     end
   end
+end
+
+# Define the expectations in Minitest::Expectations module for minitest 6 compatibility
+module Minitest::Expectations
+  infect_an_assertion :assert_changes, :must_change, :block
+  infect_an_assertion :refute_changes, :wont_change, :block
+  infect_an_assertion :assert_difference, :must_differ, :block
+  infect_an_assertion :refute_difference, :wont_differ, :block
 end
 
 unless ENV["MT_NO_EXPECTATIONS"]

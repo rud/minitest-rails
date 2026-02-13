@@ -31,7 +31,6 @@ module Minitest
         #
         # :method: must_route_from
         # :call-seq: options.must_route_from(expected_path, defaults={}, extras = {}, message=nil)
-        infect_an_assertion :assert_generates, :must_route_to
 
         ##
         # Expects that the routing of the given +path+ was handled correctly and that the parsed options (given in the +expected_options+ hash)
@@ -70,7 +69,6 @@ module Minitest
         #
         # :method: must_route_from
         # :call-seq: path.must_route_from(expected_options, extras={}, msg=nil)
-        infect_an_assertion :assert_recognizes, :must_route_from
 
         ##
         # Expects that path and options match both ways; in other words, it verifies that <tt>path</tt> generates
@@ -100,7 +98,6 @@ module Minitest
         #
         # :method: must_route_for
         # :call-seq: options.must_route_for(path, defaults={}, extras={}, message=nil)
-        infect_an_assertion :assert_routing, :must_route_for
 
         # An expectation that selects elements and makes one or more equality tests.
         #
@@ -269,7 +266,6 @@ module Minitest
         #
         # :method: must_dom_equal
         # :args: expected, message = nil
-        infect_an_assertion :assert_dom_equal, :must_dom_equal
 
         ##
         # Checks that the numeric result of evaluating an expression is not changed before and after invoking.
@@ -284,7 +280,6 @@ module Minitest
         #
         # :method: wont_dom_equal
         # :args: expected, message = nil
-        infect_an_assertion :refute_dom_equal, :wont_dom_equal
 
         extend ::ActiveSupport::Concern
 
@@ -298,6 +293,15 @@ module Minitest
       end
     end
   end
+end
+
+# Define the expectations in Minitest::Expectations module for minitest 6 compatibility
+module Minitest::Expectations
+  infect_an_assertion :assert_generates, :must_route_to
+  infect_an_assertion :assert_recognizes, :must_route_from
+  infect_an_assertion :assert_routing, :must_route_for
+  infect_an_assertion :assert_dom_equal, :must_dom_equal
+  infect_an_assertion :refute_dom_equal, :wont_dom_equal
 end
 
 unless ENV["MT_NO_EXPECTATIONS"]
